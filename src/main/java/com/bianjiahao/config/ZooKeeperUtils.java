@@ -11,7 +11,7 @@ public class ZooKeeperUtils {
 
     private  static ZooKeeper zk;
 
-    private static final String ADDRESS = "1.117.150.217:2181/testConfig";
+    private static final String ADDRESS = "1.117.150.217:2181/testLock";
 
     private static DefaultWatcher watch = new DefaultWatcher();
 
