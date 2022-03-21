@@ -16,7 +16,7 @@ public class Demo {
 
         CountDownLatch countDownLatch = new CountDownLatch(1);
 
-        ZooKeeper zooKeeper = new ZooKeeper("1.117.150.217:2181", 3000, new Watcher() {
+        ZooKeeper zooKeeper = new ZooKeeper("1.117.150.217:2181/testConfig", 3000, new Watcher() {
             @Override
             public void process(WatchedEvent watchedEvent) {
                 Event.KeeperState state = watchedEvent.getState();
@@ -95,14 +95,14 @@ public class Demo {
                 break;
         }
 
-        String path = zooKeeper.create("/obito", "obito".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+        //String path = zooKeeper.create("/obito", "obito".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
 
-        byte[] data = zooKeeper.getData("/obito", new Watcher() {
+        byte[] data = zooKeeper.getData("/AppConfig", new Watcher() {
             @Override
             public void process(WatchedEvent watchedEvent) {
                 System.out.println("get data watch" + watchedEvent.toString());
                 try {
-                    zooKeeper.getData("/obito",this,new Stat());
+                    zooKeeper.getData("/AppConfig",this,new Stat());
                 } catch (KeeperException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -114,12 +114,12 @@ public class Demo {
         System.out.println(new String(data) + "----------");
 
 
-        Stat stat = zooKeeper.setData("/obito", "OrerereO".getBytes(), 0);
+       // Stat stat = zooKeeper.setData("/obito", "OrerereO".getBytes(), 0);
 
-        zooKeeper.setData("/obito","OrerereO".getBytes(),stat.getVersion());
+        //zooKeeper.setData("/obito","OrerereO".getBytes(),stat.getVersion());
 
         System.out.println("异步回调开始");
-        zooKeeper.getData("/obito", false, new AsyncCallback.DataCallback() {
+        zooKeeper.getData("/AppConfig", false, new AsyncCallback.DataCallback() {
             @Override
             public void processResult(int i, String s, Object o, byte[] bytes, Stat stat) {
                 System.out.println("异步回调数据到达");
